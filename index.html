@@ -366,36 +366,124 @@ int main(){
 <!-- ===================== MEMORY ===================== -->
 <h2>F8Memory.c – First / Best / Worst Fit</h2>
 <pre>
-#include &lt;stdio.h&gt;
-void worstFit(int process[], int n, int partition[], int m){
+#include <stdio.h>
+void firstFit(int process[], int n, int partition[], int m)
+{
     int allocation[n];
-    for(int i=0;i&lt;n;i++) allocation[i]=-1;
-
-    for(int i=0;i&lt;n;i++){
-        int worstIndex=-1;
-        for(int j=0;j&lt;m;j++){
-            if(partition[j]&gt;=process[i]){
-                if(worstIndex==-1 || partition[j]&gt;partition[worstIndex])
-                    worstIndex=j;
+    for (int i = 0; i < n; i++)
+    {
+        allocation[i] = -1;
+    }
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            if (partition[j] >= process[i])
+            {
+                allocation[i] = j;
+                partition[j] -= process[i];
+                break;
             }
         }
-        if(worstIndex!=-1){
-            allocation[i]=worstIndex;
-            partition[worstIndex]-=process[i];
+        if (allocation[i] != -1)
+        {
+            printf("The process %d is allocated at %d\n", i + 1, allocation[i] + 1);
+        }
+        else
+        {
+            printf("The process %d is not allocated\n", i + 1);
         }
     }
-
-    for(int i=0;i&lt;n;i++){
-        if(allocation[i]!=-1)
-            printf("Process %d allocated at %d\n",i+1,allocation[i]+1);
+}
+void bestFit(int process[], int n, int partition[], int m)
+{
+    int allocation[n];
+    for (int i = 0; i < n; i++)
+    {
+        allocation[i] = -1;
+    }
+    for (int i = 0; i < n; i++)
+    {
+        int bestIndex = -1;
+        for (int j = 0; j < m; j++)
+        {
+            if (partition[j] >= process[i])
+            {
+                if (bestIndex == -1 || partition[j] < partition[bestIndex])
+                {
+                    bestIndex = j;
+                }
+            }
+        }
+        if (bestIndex != -1)
+        {
+            allocation[i] = bestIndex;
+            partition[bestIndex] = partition[bestIndex] - process[i];
+        }
+    }
+    for (int i = 0; i < n; i++)
+    {
+        if (allocation[i] != -1)
+        {
+            printf("The process %d is allocated at %d\n", i + 1, allocation[i] + 1);
+        }
         else
-            printf("Process %d not allocated\n",i+1);
+        {
+            printf("The process %d is not allocated\n", i + 1);
+        }
     }
 }
 
-int main(){
-    int p[]={500,200,300};
-    int size[]={250,600,300,400};
+void worstFit(int process[], int n, int partition[], int m){
+    int allocation[n];
+    for (int i = 0; i < n; i++)
+    {
+        allocation[i] = -1;
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        int worstIndex = -1;
+        for (int j = 0; j < m; j++)
+        {
+            if (partition[j] >= process[i])
+            {
+                if (worstIndex == -1 || partition[worstIndex] < partition[j])
+                {
+                    worstIndex = j;
+                }
+                
+            }
+            
+        }
+        if (worstIndex != -1)
+        {
+            allocation[i] = worstIndex;
+            partition[worstIndex] = partition[worstIndex] - process[i];
+        }
+    }
+    for (int  i = 0; i < n; i++)
+    {
+        if (allocation[i] != -1)
+        {
+            printf("The process %d is allocated at %d\n", i + 1, allocation[i] + 1);
+        }
+        else{
+            printf("The process %d is not allocated\n", i + 1);
+        }
+        
+    }
+    
+    
+    
+}
+
+void main()
+{
+    int p[] = {500, 200, 300};
+    int size[] = {250, 600, 300, 400};
+    // firstFit(p, 3, size, 4);
+    // bestFit(p, 3,size,4);
     worstFit(p,3,size,4);
 }
 </pre>
