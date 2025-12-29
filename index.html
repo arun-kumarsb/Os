@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Revision Guide</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --sidebar-color: #2c3e50;
+            --text-color: #333;
+            --code-bg: #282c34;
+            --code-text: #abb2bf;
+            --accent: #61afef;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        /* Sidebar Navigation */
+        nav {
+            width: 250px;
+            background: var(--sidebar-color);
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+            color: white;
+            padding: 20px 0;
+        }
+        nav h2 {
+            text-align: center;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #555;
+            padding-bottom: 10px;
+        }
+        nav a {
+            display: block;
+            color: #bdc3c7;
+            padding: 12px 25px;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+        nav a:hover {
+            background: #34495e;
+            color: white;
+        }
+        /* Main Content */
+        main {
+            margin-left: 250px;
+            padding: 40px;
+            width: 100%;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h3 {
+            color: var(--sidebar-color);
+            border-left: 5px solid var(--accent);
+            padding-left: 10px;
+            margin-top: 0;
+        }
+        pre {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            line-height: 1.5;
+        }
+        .tag {
+            display: inline-block;
+            background: #e1e8ed;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <h2>Java Topics</h2>
+    <a href="#f1">F1: Command Line Args</a>
+    <a href="#f2">F2: Matrix Addition</a>
+    <a href="#f3">F3: Classes & Objects</a>
+    <a href="#f4">F4: Method Overloading</a>
+    <a href="#f5">F5: Polymorphism</a>
+    <a href="#f6">F6: Interfaces</a>
+    <a href="#f7">F7: Exception Handling</a>
+    <a href="#f8">F8: Packages</a>
+</nav>
+
+<main>
+
+    <div id="f1" class="section">
+        <h3>F1: Command Line Arguments & Switch</h3>
+        <span class="tag">Basics / Logic</span>
+        <pre>
+public class F1a {
+    public static void main(String[] args) {
+        System.out.println("Message : " + args[0]);
+    }
+}
+public class F1b {
+    public static void main(String[] args) {
+
+        double num1 = Double.parseDouble(args[0]);
+        char op = args[1].charAt(0);
+        double num2 = Double.parseDouble(args[2]);
+        double res;
+
+        switch (op) {
+            case '+':
+                res = num1 + num2;
+                break;
+
+            case '-':
+                res = num1 - num2;
+                break;
+
+            case 'm':
+                res = num1 * num2;
+                break;
+
+            case '/':
+                if (num2 == 0) {
+                    System.out.println("Division by zero not possible");
+                    return;
+                }
+                res = num1 / num2;
+                break;
+
+            default:
+                System.out.println("Invalid operator");
+                return;
+        }
+
+        System.out.println("Result: " + res);
+    }
+}
+public class F1c {
+    public static void main(String[] args) {
+        System.out.println("No of Arguments: " + args.length);
+    }
+}</pre>
+    </div>
+
+    <div id="f2" class="section">
+        <h3>F2: Scanner & Matrix Operations</h3>
+        <span class="tag">Arrays / I/O</span>
+        <pre>
+import java.util.Scanner;
+
+public class F2 {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Usage: java CommandLineInput &lt;n&gt;");
+            return;
+        }
+        int n = Integer.parseInt(args[0]);
+        Scanner in = new Scanner(System.in);
+        int[][] mat1 = new int[n][n];  
+        int[][] mat2 = new int[n][n];  
+        int[][] Result = new int[n][n];  
+        
+        
+        System.out.println("Enter matrix 1: ");
+        for(int i = 0; i < n; i++){
+            for (int j = 0; j < n; j++) {
+                mat1[i][j] = in.nextInt();
+            }
+        }
+        System.out.println("Enter matrix 2: ");
+        for(int i = 0; i < n; i++){
+            for (int j = 0; j < n; j++) {
+                mat2[i][j] = in.nextInt();
+            }
+        }
+        System.out.println();
+        // sum 
+        for(int i = 0; i < n; i++){
+            for (int j = 0; j < n; j++) {
+                Result[i][j] = mat1[i][j] + mat2[i][j];
+                System.out.print(Result[i][j] +" ");
+            }
+            System.out.println();
+        }
+
+    }
+}</pre>
+    </div>
+
+    <div id="f3" class="section">
+        <h3>F3: Class, Constructor & This Keyword</h3>
+        <span class="tag">OOP Foundations</span>
+        <pre>
+class Employeee{
+    int empid;
+    String name;
+    double salary;
+
+    Employeee(int empid, String name, double salary) {
+        this.empid = empid;
+        this.name = name;
+        this.salary = salary;
+    }
+
+    public void raiseSalary(float percent){
+        salary += salary*percent/100;
+    }
+    public void display(){
+        System.out.println("EmpId: " + empid);
+        System.out.println("Name: " + name);
+        System.out.println("Salary: " + salary);
+    }
+}
+
+public class F3 {
+    public static void main(String[] args) {
+        Employeee e1 = new Employeee(1, "Arun", 10000);
+        e1.display();
+        e1.raiseSalary(10);
+        e1.display();
+    }
+}</pre>
+    </div>
+
+    <div id="f4" class="section">
+        <h3>F4: Method Overloading</h3>
+        <span class="tag">Polymorphism / Math</span>
+        <pre>
+import java.util.Arrays;
+
+class Point{
+    int x;
+    int y;
+    Point(){
+        x = 0;
+        y = 0;
+    }
+
+    Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+    public void setXY(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+    public int[] getXY(){
+        return new int[]{x,y};
+    }
+    public String ToString(){
+        return "(" + x + "," + y + ")";
+    }
+    public double distance(int x, int y){
+        return Math.sqrt(Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2));
+    }
+    public double distance(Point A){
+        return distance(A.x, A.y);
+    }
+    public double distance(){
+        return Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
+    }
+}
+
+
+public class F4 {
+    public static void main(String[] args) {
+        Point p1 = new Point(1,2);
+        System.out.println(Arrays.toString(p1.getXY()));
+        p1.ToString();
+        Point p2 = new Point();
+        p2.setXY(5, 5);
+        System.out.println(Arrays.toString(p2.getXY()));
+        p2.ToString();
+
+        System.out.println(p1.distance(5,5));
+        System.out.println(p1.distance(p2));
+        System.out.println(p1.distance());
+    }
+}</pre>
+    </div>
+
+    <div id="f5" class="section">
+        <h3>F5: Method Overriding (Dynamic Dispatch)</h3>
+        <span class="tag">Inheritance</span>
+        <pre>
+class MyShape{
+    void draw(){
+        System.out.println("Drawing The Generic Shape");
+    }
+    void erase(){
+        System.out.println("Erasing The Shape");
+    }
+}
+class Square extends MyShape{
+    void draw(){
+        System.out.println("Drawing The Square");
+    }
+    void erase(){
+        System.out.println("Erasing The Square");
+    }
+}
+class Circle extends MyShape{
+    void draw(){
+        System.out.println("Drawing The Circle");
+    }
+    void erase(){
+        System.out.println("Erasing The Circle");
+    }
+}
+class Triangle extends MyShape{
+    void draw(){
+        System.out.println("Drawing The Triangle");
+    }
+    void erase(){
+        System.out.println("Erasing The Triangle");
+    }
+}
+
+public class F5 {
+    public static void main(String[] args) {
+        MyShape s; 
+        s = new Square();
+        s.draw();
+        s.erase();
+        s = new Triangle();
+        s.draw();
+        s.erase();
+        s = new Circle();
+        s.draw();
+        s.erase();
+    }
+}</pre>
+    </div>
+
+    <div id="f6" class="section">
+        <h3>F6: Interfaces</h3>
+        <span class="tag">Abstraction</span>
+        <pre>
+interface Resizable{
+    void resizeWidth(int width);
+    void resizeHeight(int height);
+}
+
+class Rectangle implements Resizable{
+    int height;
+    int width;
+
+    Rectangle(int height,int width) {
+        this.height = height;
+        this.width = width;
+    }
+    public void resizeHeight(int newHeight){
+        this.height = newHeight;
+    }
+    public void resizeWidth(int newWidth){
+        this.width = newWidth;
+    }
+    public void display(){
+        System.out.println("Width: " + width + " " + "Height: " + height);
+    }
+
+}
+
+public class F6 {
+    public static void main(String[] args) {
+        Rectangle r = new Rectangle(10, 20);
+        r.display();
+        r.resizeHeight(100);
+        r.resizeWidth(200);
+        r.display();
+    }
+}</pre>
+    </div>
+
+    <div id="f7" class="section">
+        <h3>F7: Custom Exception Handling</h3>
+        <span class="tag">Try/Catch/Finally</span>
+        <pre>
+class DivisionByZero extends Exception{
+    DivisionByZero(String msg) {
+        super(msg);
+    }
+}
+
+public class F7 {
+    public static void main(String[] args) {
+        try {
+            int a = 100;
+            int b = 0;
+            if(b == 0) throw new DivisionByZero("Cannot divide by zero");
+
+            System.out.println(a/b);
+        }
+        catch (DivisionByZero e){
+            System.out.println(e.getMessage());
+        }
+        finally {
+            System.out.println("Execution completed");
+        }
+    }
+}</pre>
+    </div>
+
+    <div id="f8" class="section">
+        <h3>F8: Packages</h3>
+        <span class="tag">Encapsulation</span>
+        <pre>
+// File: F8.java
+import mypack.MyClass;
+
+public class F8 {
+    public static void main(String[] args) {
+        MyClass a = new MyClass();
+        a.display();
+    }
+}
+
+// File: mypack/MyClass.java
+package mypack;
+
+public class MyClass {
+    public void display() {
+        System.out.println("Hello from mypack");
+    }
+}</pre>
+    </div>
+
+</main>
+
+</body>
+</html>
